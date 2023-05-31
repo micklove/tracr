@@ -1,9 +1,15 @@
 # tracr
-simple lib for adding a correlation id / trace id to the context 
+simple lib for retrieving (or creating) and adding a correlation id / trace id to the context 
 
 <img src='./gopher.png' width='300'>
 
 ---
+
+TODO - Build / Release Pipe
+---
+
+### tl;dr ?
+Have a look at the examples in [cmd/examples/chi](cmd/examples/chi.go)
 
 # correlation-id
 tracr is a Go lib that allows clients to add / retrieve a correlation id header (with header name of their choice) to / from the current go context.
@@ -11,6 +17,7 @@ tracr is a Go lib that allows clients to add / retrieve a correlation id header 
 The library provides the following:
 
 ---
+
 
 ## 1. Middleware for incoming requests
 The middleware checks for a correlation ID header in the current request. If none is found, it generates a new correlation ID and adds it to the request context.
@@ -55,9 +62,9 @@ Installation with go get.
 
 <br />
 
-### TODO Examples
+### Examples
 
-Add examples
+See [the examples folder](/cmd/examples/)
 
 ---
 
@@ -69,8 +76,6 @@ add mermaid diagram(s)
 ## References
 Pages reviewed / consulted / borrowed from, when coming up with this lib
 
-TODO - clean up
-
 * https://github.com/auroratechnologies/vangoh
 * https://kevin.burke.dev/kevin/how-to-write-go-middleware/
 * https://community.developers.refinitiv.com/questions/57029/how-to-generate-signature-in-golang-any-one-help-m.html
@@ -80,6 +85,6 @@ TODO - clean up
 * https://github.com/alexsergivan/blog-examples/blob/master/middleware/main.go
 
 ### Issues to consider
-
+If an error occurs in the middleware func, the current implementation will just write an http 500 to to the response, if there is an issue retrieving the correlation id - TODO - add a method to override this behaviour
 
 ### TODO - contributing

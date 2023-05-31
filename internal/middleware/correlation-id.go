@@ -1,4 +1,4 @@
-package tracr
+package middleware
 
 import (
 	"github.com/micklove/tracr/internal/tracr"
@@ -9,7 +9,7 @@ import (
 // MiddlewareCorrelationID - Middleware to retrieve the correlation ID header from an incoming request
 // It uses a closure/decorator to inject a func that provides the preferred correlation id header key for the request.
 // Note that if the correlation ID header is missing, the middleware creates one and adds it to the context.
-func MiddlewareCorrelationID(option tracr.CorrelationIDOption, logger *log.Logger) func(http.Handler) http.Handler {
+func MiddlewareCorrelationID(option tracr.CorrelationIDOptions, logger *log.Logger) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		if logger == nil {
 			// no logger provided, use default
