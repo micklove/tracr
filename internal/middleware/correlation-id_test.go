@@ -1,4 +1,4 @@
-package tracr
+package middleware
 
 import (
 	"github.com/gofrs/uuid"
@@ -35,7 +35,7 @@ func Test_correlation_id_middleware_uses_given_header(t *testing.T) {
 
 	// Execute our middleware
 	//overrideHeaderFunc := func() string { return expectedCorrelationIDHeader }
-	MiddlewareCorrelationID(tracr.CorrelationIDOption{
+	MiddlewareCorrelationID(tracr.CorrelationIDOptions{
 		CorrelationIDHttpHeaderFn: func() (string, error) { return expectedCorrelationIDHeader, nil },
 	},
 		nil)(next).ServeHTTP(rec, req)
@@ -68,6 +68,6 @@ func Test_correlation_id_middleware_load_header_name_from_env(t *testing.T) {
 	overrideHeaderFunc := func() (string, error) {
 		return os.Getenv(envKey), nil
 	}
-	MiddlewareCorrelationID(tracr.CorrelationIDOption{CorrelationIDHttpHeaderFn: overrideHeaderFunc},
+	MiddlewareCorrelationID(tracr.CorrelationIDOptions{CorrelationIDHttpHeaderFn: overrideHeaderFunc},
 		nil)(next).ServeHTTP(rec, req)
 }
