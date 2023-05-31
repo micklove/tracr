@@ -4,7 +4,7 @@ SHELL=bash
 PROJECT_ROOT:=$(shell git rev-parse --show-toplevel)
 GIT_BRANCH:=$(shell git rev-parse --abbrev-ref HEAD | sed "s*/*-*g")
 GO_PROJECT_NAME:=$(shell go mod edit -json | jq -r .Module.Path | xargs basename)
-MAIN_DIR:=$(PROJECT_ROOT)/
+MAIN_DIR:=$(PROJECT_ROOT)
 
 LIB_DIR:=$(PROJECT_ROOT)/middleware
 
@@ -20,7 +20,10 @@ info: ## get tool version info
 
 build: ## build the code
 	$(call dump_header, $(DEBUG_DEFAULT_HDR_WIDTH), "$@", $(DEBUG_DEFAULT_HDR_CHAR), $(DEBUG_DEFAULT_HDR_FG))
-	go build $(GO_BUILD_FLAGS) -o $(GO_PROJECT_NAME) $(MAIN_DIR)
+	go build $(GO_BUILD_FLAGS) $(MAIN_DIR)/...
+
+build-examples:
+	go build $(GO_BUILD_FLAGS) $(MAIN_DIR)/cmd/examples/chi.go
 
 test: ## Run the unit tests
 	$(call dump_header, $(DEBUG_DEFAULT_HDR_WIDTH), "$@", $(DEBUG_DEFAULT_HDR_CHAR), $(DEBUG_DEFAULT_HDR_FG))

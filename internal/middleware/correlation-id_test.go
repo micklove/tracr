@@ -2,7 +2,7 @@ package tracr
 
 import (
 	"github.com/gofrs/uuid"
-	"github.com/micklove/tracr"
+	"github.com/micklove/tracr/internal/tracr"
 	"github.com/micklove/tracr/internal/tracrtest"
 	"net/http"
 	"net/http/httptest"
@@ -34,8 +34,11 @@ func Test_correlation_id_middleware_uses_given_header(t *testing.T) {
 	})
 
 	// Execute our middleware
-	overrideHeaderFunc := func() string { return expectedCorrelationIDHeader }
-	MiddlewareCorrelationID(overrideHeaderFunc, nil)(next).ServeHTTP(rec, req)
+	//overrideHeaderFunc := func() string { return expectedCorrelationIDHeader }
+	MiddlewareCorrelationID(tracr.CorrelationIDOption{
+		CorrelationIDHttpHeaderFn: func() (string, error) { return expectedCorrelationIDHeader, nil },
+	},
+		nil)(next).ServeHTTP(rec, req)
 }
 
 func Test_correlation_id_middleware_load_header_name_from_env(t *testing.T) {
@@ -62,8 +65,9 @@ func Test_correlation_id_middleware_load_header_name_from_env(t *testing.T) {
 	})
 
 	// Execute our middleware, pull the correlation id header key from the env
-	overrideHeaderFunc := func() string {
-		return os.Getenv(envKey)
+	overrideHeaderFunc := func() (string, error) {
+		return os.Getenv(envKey), nil
 	}
-	MiddlewareCorrelationID(overrideHeaderFunc, nil)(next).ServeHTTP(rec, req)
+	MiddlewareCorrelationID(tracr.CorrelationIDOption{CorrelationIDHttpHeaderFn: overrideHeaderFunc},
+		nil)(next).ServeHTTP(rec, req)
 }

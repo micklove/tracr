@@ -18,14 +18,15 @@ The middleware checks for a correlation ID header in the current request. If non
 ---
 
 #### Correlation ID generation
-nb: If no correlation ID is found in the context, a new correlation id will be generated and added.
-The library, https://github.com/gofrs/uuid, will be used to generate the correlation id.
-In future releases, we may consider adding a method to allow tracr users to provide their own method for generating correlation ids.
+nb: If no correlation ID is found in the context, a new correlation id will be generated and added to the context:
+1. Users can provide their own correlation id generator function, when instantiating the middleware.
+OR
+2. The library, https://github.com/gofrs/uuid, will be used by default to generate the correlation id (in the form of a uuid)
 
 <br />
 
 ### Preferred Header Name
-During middleware instantiation, users can provide the preferred name for the correlation id header.
+During middleware instantiation, users can provide a func that will return the preferred name for the correlation id http header.
 e.g. `x-correlation-id, x-request-id, trace-id, trace_id`, etc...
 
 If no names are provided, the default header will be used: (nb: header names are case insensitive)
@@ -37,7 +38,9 @@ If no names are provided, the default header will be used: (nb: header names are
 
 
 ## 2. Adding correlation id to outgoing requests
-See request.go. A method is provided to allow the addition of a correlation id to outgoing requests
+See [request.go](/internal/tracr/request.go). 
+
+A method is provided to allow the addition of a correlation id (and correlation id http header) to outgoing requests
 
 ---
 
