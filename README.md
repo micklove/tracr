@@ -13,8 +13,7 @@ The library provides the following:
 ---
 
 ## 1. Middleware for incoming requests
-Middleware method will look for a correlation id header in the current request.
-If no correlation id is found, a new correlation id will be generated and added to the request context.
+The middleware checks for a correlation ID header in the current request. If none is found, it generates a new correlation ID and adds it to the request context.
 
 ---
 

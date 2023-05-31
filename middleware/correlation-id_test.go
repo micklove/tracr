@@ -17,7 +17,7 @@ func Test_correlation_id_middleware_uses_given_header(t *testing.T) {
 	rec := httptest.NewRecorder()
 	header := http.Header{}
 	header.Set(expectedCorrelationIDHeader, wantCid)
-	req := tracrtest.DummyHttpRequest("GET", "/example/", nil, url.Values{
+	req := tracrtest.MockHttpRequest("GET", "/example/", nil, url.Values{
 		"blah": {"blahblah"},
 	}, header)
 
@@ -47,7 +47,7 @@ func Test_correlation_id_middleware_load_header_name_from_env(t *testing.T) {
 	rec := httptest.NewRecorder()
 	header := http.Header{}
 	header.Set(wantCorrelationIDHeader, wantCid)
-	req := tracrtest.DummyHttpRequest("GET", "/example/", nil, nil, header)
+	req := tracrtest.MockHttpRequest("GET", "/example/", nil, nil, header)
 
 	// Set our expectations that the correlation id will be available in the future context
 	next := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

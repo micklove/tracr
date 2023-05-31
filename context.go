@@ -11,7 +11,7 @@ var DefaultCorrelationIDHeaderName = "x-correlation-id"
 // CorrelationIDOptions
 // Func to be passed into tracr methods to allow retrieval of the preferred correlation id
 // header name, e.g. x-correlation-id, x-tracer-id, x-request-id, etc...
-// nb: Used a func here, to allow callers to use whatever method is preferred to
+// Note, a func is used here, to allow callers to use whatever method is preferred to
 // retrieve the header name, env variables, config file, db, ssm, etc...
 type CorrelationIDOptions func() (correlationIDHeaderName string)
 
