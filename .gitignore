@@ -17,5 +17,4 @@
 tracr
 
 # Ignore example binaries
-chi
-
+/chi
