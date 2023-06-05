@@ -9,7 +9,7 @@ TODO - Build / Release Pipe
 ---
 
 ### tl;dr ?
-Have a look at the examples in [cmd/examples/chi](cmd/examples/chi.go)
+Have a look at the examples in [cmd/examples/chi](cmd/examples/chi/README.md)
 
 # correlation-id
 tracr is a Go lib that allows clients to add / retrieve a correlation id header (with header name of their choice) to / from the current go context.

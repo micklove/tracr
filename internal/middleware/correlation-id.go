@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"github.com/gin-gonic/gin"
 	"github.com/micklove/tracr/internal/tracr"
 	"log"
 	"net/http"
@@ -35,5 +36,32 @@ func MiddlewareCorrelationID(option tracr.CorrelationIDOptions, logger *log.Logg
 			r = r.WithContext(ctx)
 			next.ServeHTTP(w, r)
 		})
+	}
+}
+
+// MiddlewareCorrelationIDGin Gin framework version of the MiddlewareCorrelationID middleware
+func MiddlewareCorrelationIDGin(option tracr.CorrelationIDOptions, logger *log.Logger) gin.HandlerFunc {
+	if logger == nil {
+		// no logger provided, use default
+		logger = log.New(log.Writer(), "", 0)
+	}
+
+	return func(c *gin.Context) {
+		correlationIDHeaderName, err := option.CorrelationIDHttpHeaderFn()
+		if err != nil {
+			c.AbortWithStatus(http.StatusInternalServerError)
+			return
+		}
+
+		correlationID := c.GetHeader(correlationIDHeaderName)
+		ctx, err := tracr.ContextWithCID(c.Request.Context(), correlationID, option.CorrelationIDGeneratorFn)
+		if err != nil {
+			c.AbortWithStatus(http.StatusInternalServerError)
+			return
+		}
+
+		c.Header(correlationIDHeaderName, correlationID)
+		c.Request = c.Request.WithContext(ctx)
+		c.Next()
 	}
 }
