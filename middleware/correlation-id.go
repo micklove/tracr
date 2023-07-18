@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/micklove/tracr/internal/tracr"
+	"github.com/micklove/tracr"
 	"log"
 	"net/http"
 )

@@ -2,9 +2,8 @@ package main
 
 import (
 	"fmt"
-	example "github.com/micklove/tracr"
-	mid "github.com/micklove/tracr/internal/middleware"
-	"github.com/micklove/tracr/internal/tracr"
+	"github.com/micklove/tracr"
+	mid "github.com/micklove/tracr/middleware"
 	"log"
 	"net/http"
 	"os"
@@ -58,7 +57,7 @@ func main() {
 		// echo the correlation id header and value in the response
 		c.Header(cidHttpHeaderName, cid)
 
-		s := example.NewService()
+		s := tracr.NewService()
 
 		cidFromService, err := s.Echo(c.Request.Context())
 		if err != nil {

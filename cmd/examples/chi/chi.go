@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/go-chi/chi"
-	mid "github.com/micklove/tracr/internal/middleware"
-	"github.com/micklove/tracr/internal/tracr"
+	"github.com/micklove/tracr"
+	mid "github.com/micklove/tracr/middleware"
 	"log"
 	"net/http"
 )

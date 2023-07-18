@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"github.com/gofrs/uuid"
-	"github.com/micklove/tracr/internal/tracr"
+	"github.com/micklove/tracr"
 	"github.com/micklove/tracr/internal/tracrtest"
 	"net/http"
 	"net/http/httptest"
