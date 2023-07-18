@@ -23,7 +23,7 @@ func main() {
 	}
 
 	// register the correlation ID middleware
-	r.Use(mid.MiddlewareCorrelationID(correlationIDOptions, nil))
+	r.Use(mid.MiddlewareCorrelationIDChi(correlationIDOptions, nil))
 
 	// create a handler named hello
 	hello := func(w http.ResponseWriter, r *http.Request) {

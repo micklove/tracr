@@ -28,14 +28,14 @@ func Test_correlation_id_middleware_uses_given_header(t *testing.T) {
 			t.Errorf("GetCID() = returned error %v", err)
 		}
 		if got != wantCid {
-			t.Errorf("MiddlewareCorrelationID() = %v, want %v", got, wantCid)
+			t.Errorf("MiddlewareCorrelationIDChi() = %v, want %v", got, wantCid)
 		}
 		w.Write([]byte("OK"))
 	})
 
 	// Execute our middleware
 	//overrideHeaderFunc := func() string { return expectedCorrelationIDHeader }
-	MiddlewareCorrelationID(tracr.CorrelationIDOptions{
+	MiddlewareCorrelationIDChi(tracr.CorrelationIDOptions{
 		CorrelationIDHttpHeaderFn: func() (string, error) { return expectedCorrelationIDHeader, nil },
 	},
 		nil)(next).ServeHTTP(rec, req)
@@ -59,7 +59,7 @@ func Test_correlation_id_middleware_load_header_name_from_env(t *testing.T) {
 			t.Errorf("GetCID() = returned error %v", err)
 		}
 		if got != wantCid {
-			t.Errorf("MiddlewareCorrelationID() = %v, want %v", got, wantCid)
+			t.Errorf("MiddlewareCorrelationIDChi() = %v, want %v", got, wantCid)
 		}
 		w.Write([]byte("OK"))
 	})
@@ -68,6 +68,6 @@ func Test_correlation_id_middleware_load_header_name_from_env(t *testing.T) {
 	overrideHeaderFunc := func() (string, error) {
 		return os.Getenv(envKey), nil
 	}
-	MiddlewareCorrelationID(tracr.CorrelationIDOptions{CorrelationIDHttpHeaderFn: overrideHeaderFunc},
+	MiddlewareCorrelationIDChi(tracr.CorrelationIDOptions{CorrelationIDHttpHeaderFn: overrideHeaderFunc},
 		nil)(next).ServeHTTP(rec, req)
 }

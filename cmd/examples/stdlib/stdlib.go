@@ -40,9 +40,9 @@ func main() {
 		},
 	}
 
-	mid.MiddlewareCorrelationID(correlationIDOptions, nil)(http.HandlerFunc(indexHandler))
-	http.HandleFunc("/", mid.MiddlewareCorrelationID(correlationIDOptions, nil)(http.HandlerFunc(indexHandler)).ServeHTTP)
-	//http.HandleFunc("/", indexHandler)
+	// example usage of the correlation id AND http-logger middleware
+	http.HandleFunc("/", mid.MiddlewareCorrelationID(mid.LoggingMiddleware(indexHandler, false), correlationIDOptions, nil))
+	http.HandleFunc("/logger-with-body", mid.MiddlewareCorrelationID(mid.LoggingMiddleware(indexHandler, true), correlationIDOptions, nil))
 
 	port := 8087
 	log.Println("Server started on http://localhost:", port)
