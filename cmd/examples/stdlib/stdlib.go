@@ -23,9 +23,8 @@ func main() {
 	// retrieve the correlation ID http header name and the correlation ID value. This allows the caller to
 	// use whatever strategy they want, to generate the correlation ID e.g. DB Sequence, UUID, GUID, etc... and / or
 	// to use their preferred strategy for naming the correlation id http header (e.g. from env var, config , ssm, etc..)
-	cidHttpHeaderName := "my-trace-header"
+	// Note, the correlation ID http header name function is optional, if not provided, the default will be used.
 	correlationIDOptions := tracr.CorrelationIDOptions{
-		CorrelationIDHttpHeaderFn: func() (string, error) { return cidHttpHeaderName, nil },
 		CorrelationIDGeneratorFn: func() (string, error) {
 			return uuid.Must(uuid.NewV4()).String(), nil
 		},

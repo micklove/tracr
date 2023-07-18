@@ -32,7 +32,7 @@ type CorrelationIDGenerator func() (correlationID string, err error)
 // Allows clients to load the http header name from the ENV, config file, etc...
 type CorrelationIDHeaderFn func() (correlationIDHeaderName string, err error)
 
-func (o *CorrelationIDOptions) getCorrelationIDHttpHeaderName() (string, error) {
+func (o *CorrelationIDOptions) GetCorrelationIDHttpHeaderName() (string, error) {
 	if o.CorrelationIDHttpHeaderFn != nil {
 		return o.CorrelationIDHttpHeaderFn()
 	}

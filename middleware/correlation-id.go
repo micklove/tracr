@@ -18,7 +18,7 @@ func MiddlewareCorrelationID(next http.HandlerFunc, option tracr.CorrelationIDOp
 
 	return func(w http.ResponseWriter, r *http.Request) {
 
-		correlationIDHeaderName, err := option.CorrelationIDHttpHeaderFn()
+		correlationIDHeaderName, err := option.GetCorrelationIDHttpHeaderName()
 		if err != nil {
 			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 			return
@@ -48,7 +48,7 @@ func MiddlewareCorrelationIDChi(option tracr.CorrelationIDOptions, logger *log.L
 
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
-			correlationIDHeaderName, err := option.CorrelationIDHttpHeaderFn()
+			correlationIDHeaderName, err := option.GetCorrelationIDHttpHeaderName()
 			if err != nil {
 				http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 				return
@@ -77,7 +77,7 @@ func MiddlewareCorrelationIDGin(option tracr.CorrelationIDOptions, logger *log.L
 	}
 
 	return func(c *gin.Context) {
-		correlationIDHeaderName, err := option.CorrelationIDHttpHeaderFn()
+		correlationIDHeaderName, err := option.GetCorrelationIDHttpHeaderName()
 		if err != nil {
 			c.AbortWithStatus(http.StatusInternalServerError)
 			return
