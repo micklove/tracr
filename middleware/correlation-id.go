@@ -32,7 +32,8 @@ func MiddlewareCorrelationID(option tracr.CorrelationIDOptions, logger *log.Logg
 				return
 			}
 
-			w.Header().Set(correlationIDHeaderName, correlationID)
+			cidFromCtx, err := tracr.GetCID(ctx)
+			w.Header().Set(correlationIDHeaderName, cidFromCtx)
 			r = r.WithContext(ctx)
 			next.ServeHTTP(w, r)
 		})
@@ -60,7 +61,8 @@ func MiddlewareCorrelationIDGin(option tracr.CorrelationIDOptions, logger *log.L
 			return
 		}
 
-		c.Header(correlationIDHeaderName, correlationID)
+		cidFromCtx, err := tracr.GetCID(ctx)
+		c.Header(correlationIDHeaderName, cidFromCtx)
 		c.Request = c.Request.WithContext(ctx)
 		c.Next()
 	}

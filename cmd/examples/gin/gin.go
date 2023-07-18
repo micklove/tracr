@@ -55,7 +55,7 @@ func main() {
 		log.Printf("Context CID = %s", cid)
 
 		// echo the correlation id header and value in the response
-		c.Header(cidHttpHeaderName, cid)
+		//c.Header(cidHttpHeaderName, cid)
 
 		s := tracr.NewService()
 

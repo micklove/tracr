@@ -25,6 +25,7 @@ build: ## build the code
 build-examples:
 	go build $(GO_BUILD_FLAGS) $(MAIN_DIR)/cmd/examples/chi/chi.go
 	go build $(GO_BUILD_FLAGS) $(MAIN_DIR)/cmd/examples/gin/gin.go
+	go build $(GO_BUILD_FLAGS) $(MAIN_DIR)/cmd/examples/stdlib/stdlib.go
 
 test: ## Run the unit tests
 	$(call dump_header, $(DEBUG_DEFAULT_HDR_WIDTH), "$@", $(DEBUG_DEFAULT_HDR_CHAR), $(DEBUG_DEFAULT_HDR_FG))
