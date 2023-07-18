@@ -53,6 +53,10 @@ A method is provided to allow the addition of a correlation id (and correlation 
 
 <br />
 
+## 3. Add middleware that logs all http request
+See [./middleware/http_logger.go](./middleware/http_logger.go).
+See example usage in [cmd/examples/stdlib/stdlib.go](./cmd/examples/stdlib/stdlib.go)
+
 ## Installation
 Installation with go get.
 

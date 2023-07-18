@@ -11,18 +11,9 @@ import (
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	cid, err := tracr.GetCID(r.Context())
-
 	if err != nil {
 		log.Printf("GetCID() = returned error %v", err)
 	}
-
-	//headerCid := r.Header.Get(cidHttpHeaderName)
-	//log.Printf("Header %s = %s", cidHttpHeaderName, headerCid)
-	//log.Printf("Context CID = %s", cid)
-	//
-	//// echo the correlation id header and value in the response
-	//w.Header().Set(cidHttpHeaderName, cid)
-
 	fmt.Fprint(w, fmt.Sprintf("cid: %s", cid))
 }
 
@@ -46,6 +37,5 @@ func main() {
 
 	port := 8087
 	log.Println("Server started on http://localhost:", port)
-	//log.Fatal(http.ListenAndServe(":8080", nil))
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", port), nil))
 }
