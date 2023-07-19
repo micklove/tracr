@@ -9,7 +9,8 @@ TODO - Build / Release Pipe
 ---
 
 ### tl;dr ?
-Have a look at the examples in [cmd/examples/chi](cmd/examples/chi/README.md)
+Have a look at the [chi](cmd/examples/chi/README.md), [gin](cmd/examples/gin/README.md) or [stdlib](cmd/examples/stdlib/README.md) examples.
+<br/>(coming soon, Gorilla Mux and Echo)
 
 # correlation-id
 tracr is a Go lib that allows clients to add / retrieve a correlation id header (with header name of their choice) to / from the current go context.
@@ -45,7 +46,7 @@ If no names are provided, the default header will be used: (nb: header names are
 
 
 ## 2. Adding correlation id to outgoing requests
-See [request.go](/internal/tracr/request.go). 
+See [request.go](request.go). 
 
 A method is provided to allow the addition of a correlation id (and correlation id http header) to outgoing requests
 
@@ -68,7 +69,7 @@ Installation with go get.
 
 ### Examples
 
-See [the examples folder](/cmd/examples/)
+See [the examples folder, for chi, gin and stdlib](/cmd/examples/)
 
 ---
 
