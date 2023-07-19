@@ -9,12 +9,12 @@ import (
 
 func TestAddCorrelationIDToRequest_null_request_creates_request_with_correlation_id(t *testing.T) {
 	wantCorrelationID := "abcdef-ghijkl-1234"
-	correlationIDGenerator := func() (string, error) { return wantCorrelationID, nil } // override the gotCorrelationID generator for testing blank values
+	cIDGeneratorFn := func() (string, error) { return wantCorrelationID, nil } // override the gotCorrelationID generator for testing blank values
 	expectedCorrelationIDHeader := "my-request-id"
 	overrideHeaderFunc := func() (string, error) { return expectedCorrelationIDHeader, nil }
 
 	//SUT
-	req, _ := AddCorrelationIDToRequest(nil, nil, overrideHeaderFunc, correlationIDGenerator)
+	req, _ := AddCorrelationIDToRequest(nil, nil, overrideHeaderFunc, cIDGeneratorFn)
 
 	gotCorrelationID := req.Header.Get(expectedCorrelationIDHeader)
 	if gotCorrelationID != wantCorrelationID {
@@ -27,12 +27,12 @@ func TestAddCorrelationIDToRequest_null_context_creates_request_with_correlation
 	req, _ := http.NewRequest(http.MethodGet, expectedUrl, nil)
 
 	wantCorrelationID := "abcdef-ghijkl-12345678"
-	correlationIDGenerator := func() (string, error) { return wantCorrelationID, nil } // override the gotCorrelationID generator for testing blank values
+	cIDGenerator := func() (string, error) { return wantCorrelationID, nil } // override the gotCorrelationID generator for testing blank values
 	expectedCorrelationIDHeader := "my-request-id"
 	overrideHeaderFunc := func() (string, error) { return expectedCorrelationIDHeader, nil }
 
 	//SUT
-	gotReq, _ := AddCorrelationIDToRequest(nil, req, overrideHeaderFunc, correlationIDGenerator)
+	gotReq, _ := AddCorrelationIDToRequest(nil, req, overrideHeaderFunc, cIDGenerator)
 
 	gotCorrelationID := gotReq.Header.Get(expectedCorrelationIDHeader)
 	if gotCorrelationID != wantCorrelationID {
