@@ -40,7 +40,7 @@ test: ## Run the unit tests
 test-race: ## Run the unit tests, check for race conditions
 	go test --short -cover ./... -v -race
 
-quality: ## TODO
+quality: lint static-analysis ## TODO
 	$(call dump_header, $(DEBUG_DEFAULT_HDR_WIDTH), "$@", $(DEBUG_DEFAULT_HDR_CHAR), $(DEBUG_DEFAULT_HDR_FG))
 
 lint: ## TODO

@@ -32,8 +32,7 @@ jobs:
 
       - name: quality
         run: |
-          make lint
-          make static-analysis
+          make quality
 
       - name: Run security scanning
         run: |
