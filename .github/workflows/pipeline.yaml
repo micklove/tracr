@@ -1,0 +1,43 @@
+name: "build, test"
+on:
+  push:
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-go@v3
+        with:
+          go-version: "1.20.4"
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: install pre-requisites
+        run: |
+          make pre-reqs
+
+      - name: tool version info
+        run: |
+          make info
+
+      - name: build
+        run: |
+          make build
+
+      - name: test
+        run: |
+          make test
+
+      - name: quality
+        run: |
+          make lint
+          make static-analysis
+
+      - name: Run security scanning
+        run: |
+          make security
+
+#Test locally, with
+# act --workflows .github/workflows/pipeline.yaml
