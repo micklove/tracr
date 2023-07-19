@@ -8,6 +8,26 @@ import (
 	"testing"
 )
 
+func TestAddCorrelationIDToRequest_existing_cid_in_ctx_is_used(t *testing.T) {
+	wantCorrelationID := "abcdef-ghijkl-1234"
+	expectedCorrelationIDHeader := "my-request-id"
+	overrideHeaderFunc := func() (string, error) { return expectedCorrelationIDHeader, nil }
+	cIDGeneratorFn := func() (string, error) { return "another-correlation-id", nil } // this correlation id should be ignored, as there's already one in the context
+
+	ctx := context.WithValue(context.Background(), contextKeyCorrelationID, wantCorrelationID)
+
+	//SUT
+	req, _ := AddCorrelationIDToRequest(ctx, nil, CorrelationIDOptions{
+		CorrelationIDGeneratorFn:  cIDGeneratorFn,
+		CorrelationIDHttpHeaderFn: overrideHeaderFunc,
+	})
+
+	gotCorrelationID := req.Header.Get(expectedCorrelationIDHeader)
+	if gotCorrelationID != wantCorrelationID {
+		t.Errorf("want [%s], got[%s]", wantCorrelationID, gotCorrelationID)
+	}
+}
+
 func TestAddCorrelationIDToRequest_null_request_creates_request_with_correlation_id(t *testing.T) {
 	wantCorrelationID := "abcdef-ghijkl-1234"
 	cIDGeneratorFn := func() (string, error) { return wantCorrelationID, nil } // override the gotCorrelationID generator for testing blank values
