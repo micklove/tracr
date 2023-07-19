@@ -38,10 +38,10 @@ func TestContextWithCID_with_string(t *testing.T) {
 				ctx:           context.TODO(),
 				correlationID: "",
 			},
-			want:                   context.WithValue(context.TODO(), contextKeyCorrelationID, "hello-world"),
-			wantValue:              "hello-world",
+			want:                   context.WithValue(context.TODO(), contextKeyCorrelationID, "HELLO_WORLD"),
+			wantValue:              "HELLO_WORLD",
 			wantErr:                false,
-			correlationIDGenerator: func() (string, error) { return "hello-world", nil },
+			correlationIDGenerator: func() (string, error) { return "HELLO_WORLD", nil },
 		},
 		{
 			name: "blank cid generates a new cid",
@@ -50,14 +50,14 @@ func TestContextWithCID_with_string(t *testing.T) {
 				correlationID: "",
 			},
 			want:                   context.WithValue(context.TODO(), contextKeyCorrelationID, nil),
-			wantValue:              "hello-world",
+			wantValue:              "HELLO_WORLD",
 			wantErr:                false,
-			correlationIDGenerator: func() (string, error) { return "hello-world", nil },
+			correlationIDGenerator: func() (string, error) { return "HELLO_WORLD", nil },
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			correlationIDGenerator = tt.correlationIDGenerator
+			//defaultCorrelationIDGenerator = tt.correlationIDGenerator
 			got, err := ContextWithCID(tt.args.ctx, tt.args.correlationID, tt.correlationIDGenerator)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ContextWithCID error = %v, wantErr %v", err, tt.wantErr)

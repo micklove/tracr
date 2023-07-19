@@ -17,14 +17,6 @@ type CorrelationIDOptions struct {
 	CorrelationIDGeneratorFn  CorrelationIDGenerator
 }
 
-// DefaultCorrelationIDHeaderName  If no default correlation id header strategy is provided
-// in CorrelationIDOptions, tracr uses the one below
-var DefaultCorrelationIDHeaderName = func() (string, error) { return "x-correlation-id", nil }
-
-// If no correlation id strategy is provided in CorrelationIDOptions, tracr uses the gofr
-// uuid lib, to generate a uuid.
-var correlationIDGenerator = func() (string, error) { return uuid.Must(uuid.NewV4()).String(), nil }
-
 type CorrelationIDGenerator func() (correlationID string, err error)
 
 // CorrelationIDHeaderFn - allows users of the lib to use their own correlation id http header
@@ -36,15 +28,18 @@ func (o *CorrelationIDOptions) GetCorrelationIDHttpHeaderName() (string, error) 
 	if o.CorrelationIDHttpHeaderFn != nil {
 		return o.CorrelationIDHttpHeaderFn()
 	}
-	return DefaultCorrelationIDHeaderName()
+	//If no default correlation id header strategy provided, in CorrelationIDOptions, tracr uses the one below
+	return func() (string, error) { return "x-correlation-id", nil }()
 }
 
-// getCorrelationID - returns a correlation ID
+// GetCorrelationID - returns a correlation ID
 // Allows users of the lib to use their own correlation id generation strategy
 // e.g. Database, different library, etc...
-func (o *CorrelationIDOptions) getCorrelationID() (string, error) {
+func (o *CorrelationIDOptions) GetCorrelationID() (string, error) {
 	if o.CorrelationIDGeneratorFn != nil {
 		return o.CorrelationIDGeneratorFn()
 	}
-	return correlationIDGenerator()
+	// If no correlation id strategy is provided in CorrelationIDOptions, tracr uses the gofr
+	// uuid lib, to generate a uuid.
+	return func() (string, error) { return uuid.Must(uuid.NewV4()).String(), nil }()
 }

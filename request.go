@@ -10,14 +10,14 @@ import (
 // If the context does not contain an existing CorrelationID, a new one will be generated using the
 // correlationIDGeneratorFn provided.
 // Note, If context or request are null, new ones will be returned
-func AddCorrelationIDToRequest(ctx context.Context, req *http.Request, correlationIDHeaderFn CorrelationIDHeaderFn, correlationIDGeneratorFn CorrelationIDGenerator) (*http.Request, error) {
+func AddCorrelationIDToRequest(ctx context.Context, req *http.Request, options CorrelationIDOptions) (*http.Request, error) {
 	correlationID, _ := GetCID(ctx)
 	if ctx == nil {
 		ctx = context.TODO() // TODO - is this the best way to handle this?
 	}
 
-	// Copy the current context, containing the correlation ID (will generator one, if required)
-	ctx, err := ContextWithCID(ctx, correlationID, correlationIDGeneratorFn)
+	// Copy the current context, containing the correlation ID (will generate one, if required)
+	ctx, err := ContextWithCID(ctx, correlationID, options.GetCorrelationID)
 	if err != nil {
 		return nil, err
 	}
@@ -30,7 +30,7 @@ func AddCorrelationIDToRequest(ctx context.Context, req *http.Request, correlati
 	}
 
 	req = req.WithContext(ctx)
-	correlationIDHeaderName, err := correlationIDHeaderFn()
+	correlationIDHeaderName, err := options.GetCorrelationIDHttpHeaderName()
 	if err != nil {
 		return nil, err
 	}

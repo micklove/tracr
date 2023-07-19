@@ -27,13 +27,12 @@ and value in the response headers (and, in this case, in the body)
 
 ```http response
 HTTP/1.1 200 OK
-My-Trace-Header: 0c7928a0-4fb5-425a-98b2-019fb0317ee9
-Date: Tue, 18 Jul 2023 12:50:24 GMT
+X-Correlation-Id: 68a914cd-591c-4701-b208-98c2181d8a2e
+Date: Wed, 19 Jul 2023 13:49:21 GMT
 Content-Length: 41
 Content-Type: text/plain; charset=utf-8
 
-cid: 0c7928a0-4fb5-425a-98b2-019fb0317ee9
-
+cid: 68a914cd-591c-4701-b208-98c2181d8a2e
 ```
 
 <br />
@@ -43,16 +42,17 @@ cid: 0c7928a0-4fb5-425a-98b2-019fb0317ee9
 ### Curl, with a correlation id in the request
 Curl the server, adding in the correlation id header
 
-    curl -i localhost:8087/hello -H "my-trace-header: hello-world-1"
+    curl -i localhost:8087/hello -H "x-correlation-id: hello-world-1"
 
 The server will return the correlation id header and value in the response headers (and, in this case, in the body)
 
 ```http response
 HTTP/1.1 200 OK
-My-Trace-Header: hello-world-1
-Date: Tue, 18 Jul 2023 12:49:40 GMT
+X-Correlation-Id: hello-world-1
+Date: Wed, 19 Jul 2023 13:48:57 GMT
 Content-Length: 18
 Content-Type: text/plain; charset=utf-8
 
 cid: hello-world-1
+
 ```

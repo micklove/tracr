@@ -20,7 +20,7 @@ From the project root
 ### Curl, containing `NO` correlation id in the request 
 Curl the server, with headers flag enabled, with no correlation id, one will be created and added to the response
 
-    curl -i localhost:3000/hello
+    curl -i localhost:8000/hello
 
 The server returns the correlation id header (in the example, named `my-trace-header`, but this is configurable) 
 and value in the response headers (and, in this case, in the body)
@@ -44,7 +44,7 @@ correlation id header out = b63a65cc-20fa-4b17-97ad-b796bdb6d338
 ### Curl, with a correlation id in the request
 Curl the server, adding in the correlation id header
 
-    curl -i localhost:3000/hello -H "my-trace-header: hello-world-1"
+    curl -i localhost:8000/hello -H "my-trace-header: hello-world-1"
 
 The server will return the correlation id header and value in the response headers (and, in this case, in the body)
 
