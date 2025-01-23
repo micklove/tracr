@@ -1,4 +1,4 @@
-## Chi - Example correlation id middleware usage 
+## Gin - Example correlation id middleware usage 
 creates a gin router, listening on port 300,  sets up the correlation id middleware and registers the handlers
 
 ### Build the server
